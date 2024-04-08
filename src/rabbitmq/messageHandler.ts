@@ -1,11 +1,11 @@
-import { CourseController } from "../controller/courseController";
-import { CourseRepository } from "../repository/course.repository";
-import { CourseService } from "../services/course.service";
+import { OrderController } from "../controller/order.controller";
+import { OrderRepository } from "../repository/order.repository";
+import { OrderService } from "../services/course.service";
 import rabbitClient from "./client";
 
-const courseRepository = new CourseRepository();
-const service = new CourseService(courseRepository);
-const controller = new CourseController(service);
+const orderRepository = new OrderRepository();
+const service = new OrderService(orderRepository);
+const controller = new OrderController(service);
 
 export default class MessageHandler {
   static async handle(
@@ -22,29 +22,6 @@ export default class MessageHandler {
         response = await controller.createCourse.bind(controller)(data);
         break;
 
-      case "get-courses":
-        response = await controller.getCourses.bind(controller)(data);
-        break;
-
-      case "update-course":
-        response = await controller.updataCourse.bind(controller)(data);
-        break;
-
-      case "delete-course":
-        response = await controller.deleteCourse.bind(controller)(data);
-        break;
-
-      case "get-course-wop": //without purchase
-        response = await controller.getCourseWop.bind(controller)(data);
-        break;
-
-      case "get-all-courses":
-        response = await controller.getAllCourses.bind(controller)();
-        break;
-      
-        case "get-trending-courses":
-          response = await controller.getTrendingCourses.bind(controller)();
-          break;  
 
       default:
         response = "Request-key notfound";

@@ -1,7 +1,5 @@
 {
     "dependencies": {
-        "@aws-sdk/client-s3": "^3.535.0",
-        "@aws-sdk/lib-storage": "^3.535.0",
         "@nabeelktr/error-handler": "^1.0.0",
         "@types/uuid": "^9.0.8",
         "amqplib": "^0.10.3",

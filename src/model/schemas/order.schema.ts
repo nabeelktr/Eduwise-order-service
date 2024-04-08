@@ -1,8 +1,7 @@
 import mongoose, { Model, Schema } from "mongoose";
 import "dotenv/config";
-import { Course } from "../course.entities";
 
-const CourseSchema: Schema<Course> = new Schema(
+const CourseSchema: Schema<any> = new Schema(
   {
     instructorId: { type: String, required: true },
     name: { type: String, required: true },
@@ -49,5 +48,5 @@ const CourseSchema: Schema<Course> = new Schema(
   { timestamps: true }
 );
 
-const CourseModel: Model<Course> = mongoose.model("Course", CourseSchema);
+const CourseModel: Model<any> = mongoose.model("Course", CourseSchema);
 export default CourseModel;
