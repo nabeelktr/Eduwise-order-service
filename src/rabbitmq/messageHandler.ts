@@ -1,6 +1,6 @@
 import { OrderController } from "../controller/order.controller";
 import { OrderRepository } from "../repository/order.repository";
-import { OrderService } from "../services/course.service";
+import { OrderService } from "../services/order.service";
 import rabbitClient from "./client";
 
 const orderRepository = new OrderRepository();
@@ -18,10 +18,12 @@ export default class MessageHandler {
     console.log("The operation is", operation, data);
 
     switch (operation) {
-      case "create-course":
-        response = await controller.createCourse.bind(controller)(data);
+      case "stripe-publishkey":
+        response = await controller.sendPublishKey.bind(controller)();
         break;
-
+      
+      case "payment-intent" : 
+        response = await controller.newPayment.bind(controller)(data);
 
       default:
         response = "Request-key notfound";

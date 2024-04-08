@@ -1,52 +1,28 @@
 import mongoose, { Model, Schema } from "mongoose";
 import "dotenv/config";
 
-const CourseSchema: Schema<any> = new Schema(
+export interface IOrder extends Document{
+  courseId: string;
+  userId: string;
+  payment_info: object;
+}
+
+const orderSchema: Schema<IOrder> = new Schema(
   {
-    instructorId: { type: String, required: true },
-    name: { type: String, required: true },
-    description: { type: String, required: true },
-    price: { type: String, required: true },
-    estimatedPrice: { type: String, required: true },
-    tags: { type: String, required: true },
-    level: { type: String, required: true },
-    demoUrl: { type: String, required: true },
-    subtitleUrl: { type: String },
-    totalVideos: { type: String, required: true },
-    benefits: [{ title: String }],
-    prerequisites: [{ title: String }],
-    courseContentData: [
-      {
-        videoUrl: String,
-        subtitleUrl: String,
-        title: String,
-        description: String,
-        videoSection: String,
-        links: [{ title: String, url: String }],
-        suggestion: String,
-      },
-    ],
-    thumbnail: {
-      type: String,
-    },
-    reviews: [
-      {
-        user: String,
-        rating: Number,
-        comment: String,
-      },
-    ],
-    ratings: {
-      type: Number,
-      default: 0,
-    },
-    purchased: {
-      type: Number,
-      default: 0,
-    },
+   courseId: {
+    type: String,
+    required: true,
+   },
+   userId: {
+    type: String,
+    required: true,
+   },
+   payment_info: {
+    type: Object,
+   }
   },
   { timestamps: true }
 );
 
-const CourseModel: Model<any> = mongoose.model("Course", CourseSchema);
-export default CourseModel;
+const OrderModel: Model<any> = mongoose.model("Order", orderSchema);
+export default OrderModel;

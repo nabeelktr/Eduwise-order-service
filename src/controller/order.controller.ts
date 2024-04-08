@@ -12,5 +12,19 @@ export class OrderController {
     }
   };
 
+  sendPublishKey = () => {
+    try {
+      return {publishKey: process.env.STRIPE_PUBLISH_KEY}
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
 
+  newPayment = (data: string) => {
+    try{
+      return this.service.newPayment(data)
+    }catch(e:any){
+      console.log(e);
+    }
+  }
 }
