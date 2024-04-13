@@ -24,6 +24,11 @@ export default class MessageHandler {
       
       case "payment-intent" : 
         response = await controller.newPayment.bind(controller)(data);
+        break;
+
+        case "create-order" : 
+        response = await controller.createOrder.bind(controller)(data);
+        break;  
 
       default:
         response = "Request-key notfound";

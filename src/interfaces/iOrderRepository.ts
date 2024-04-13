@@ -1,5 +1,5 @@
 
 
 export interface IOrderRepository {
-  createCourse(data: any): Promise<object | null> ;
+  createOrder(data: any): Promise<object | null> ;
 }
