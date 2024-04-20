@@ -8,6 +8,35 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 export class OrderService implements IOrderService {
   constructor(private repository: IOrderRepository) {}
 
+  async getOrdersAnalytics(instructorId: string): Promise<Object[] | null> {
+    const months: { month: string; value: string }[] = [];
+    for (let i = 0; i < 12; i++) {
+      const date = new Date();
+      date.setMonth(date.getMonth() - i);
+      months.push({
+        month: date.toLocaleString("default", { month: "long" }),
+        value: date.toISOString().slice(0, 7),
+      });
+    }
+
+    const response = await this.repository.getOrdersAnalytics(instructorId);
+    const aggregatedData: Record<string, number> = {};
+    if (response) {
+      response.forEach(({ _id, count }: any) => {
+        aggregatedData[_id] = count;
+      });
+    } else {
+      return null;
+    }
+
+    const output: Object[] = months.map(({ month, value }) => ({
+      month,
+      count: aggregatedData[value] || 0,
+    }));
+
+    return output;
+  }
+
   async newPayment(data: string): Promise<Object> {
     try {
       const customer = await stripe.customers.create({
@@ -49,13 +78,11 @@ export class OrderService implements IOrderService {
     }
   }
 
-  createOrder(data:any) {
-    try{
-      return this.repository.createOrder(data)
-    }catch(e:any){
+  createOrder(data: any) {
+    try {
+      return this.repository.createOrder(data);
+    } catch (e: any) {
       throw new NotFoundError();
     }
   }
-
-
 }

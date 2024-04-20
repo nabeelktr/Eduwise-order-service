@@ -28,4 +28,12 @@ export class OrderController {
       console.log(e);
     }
   }
+
+  getOrdersAnalytics = async (instructorId: string) => {
+    try {
+      return this.service.getOrdersAnalytics(instructorId);
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
 }
